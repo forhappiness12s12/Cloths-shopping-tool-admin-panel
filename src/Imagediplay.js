@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
-const ImageDisplay = () => {
+const ImageDisplay = ({ onLogout }) => {
   const [images, setImages] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [fabricname, setFabricname] = useState('Trouser%20Fabric'); // Set initial fabric name
 
   useEffect(() => {
     const fetchImages = async () => {
+      if (!fabricname) return;
+
       try {
         console.log('Fetching files from the bucket...');
         const { data, error } = await supabase
           .storage
-          .from('im') // Ensure this matches your bucket name exactly
+          .from(fabricname) // Use the correct bucket name from fabricname
           .list('', { limit: 100 }); // Adjust the limit as needed
 
         if (error) {
@@ -22,12 +26,13 @@ const ImageDisplay = () => {
 
         if (!data || data.length === 0) {
           console.log('No files found in the bucket.');
+          setImages([]);
           return;
         }
 
         console.log('Files found:', data);
 
-        const baseUrl = 'https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/im/';
+        const baseUrl = `https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/${fabricname}/`;
 
         // Manually construct the public URLs
         const imageUrls = data.map((file) => {
@@ -43,7 +48,7 @@ const ImageDisplay = () => {
     };
 
     fetchImages();
-  }, []);
+  }, [fabricname]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -55,11 +60,15 @@ const ImageDisplay = () => {
       return;
     }
 
+    setUploading(true);
+
     const filePath = `${selectedFile.name}`;
     const { data, error } = await supabase
       .storage
-      .from('im') // Ensure this matches your bucket name exactly
+      .from(fabricname) // Use the correct bucket name from fabricname
       .upload(filePath, selectedFile);
+
+    setUploading(false);
 
     if (error) {
       console.error('Error uploading file:', error);
@@ -69,7 +78,7 @@ const ImageDisplay = () => {
     console.log('File uploaded:', data);
 
     // Update the images list with the new image URL
-    const newImageUrl = `https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/im/${filePath}`;
+    const newImageUrl = `https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/${fabricname}/${filePath}`;
     setImages((prevImages) => [...prevImages, newImageUrl]);
   };
 
@@ -88,7 +97,7 @@ const ImageDisplay = () => {
 
     const { error } = await supabase
       .storage
-      .from('im') // Ensure this matches your bucket name exactly
+      .from(fabricname) // Use the correct bucket name from fabricname
       .remove([fileName]);
 
     if (error) {
@@ -105,6 +114,56 @@ const ImageDisplay = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
+      <div>
+        <button
+          onClick={() => setFabricname("Trouser%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Trouser Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Polo%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Polo Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Jogger%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Jogger Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Tshirt%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Tshirt Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Polo%20Collar%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Polo Collar Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Polo%20Neckband%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Polo Neckband Fabric
+        </button>
+        <button
+          onClick={() => setFabricname("Polo%20Cuff%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Polo Cuff Fabric
+        </button>
+        <button
+          onClick={onLogout}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4"
+        >
+          Logout
+        </button>
+      </div>
       <h1 className="text-3xl font-bold mb-6">Display PNG Images</h1>
       <div className="mb-6 flex space-x-4">
         <input
@@ -115,8 +174,9 @@ const ImageDisplay = () => {
         <button
           onClick={handleUpload}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          disabled={uploading}
         >
-          Upload
+          {uploading ? 'Uploading...' : 'Upload'}
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

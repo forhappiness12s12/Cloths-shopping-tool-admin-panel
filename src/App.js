@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import ImageDisplay from './Imagediplay';
@@ -30,18 +29,13 @@ const App = () => {
     };
   }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setSession(null);
-  };
-
   return (
-    <div>
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
       {session ? (
-        <>
-          <button onClick={handleLogout}>Logout</button>
-          <ImageDisplay />
-        </>
+        <ImageDisplay onLogout={async () => {
+          await supabase.auth.signOut();
+          setSession(null);
+        }} />
       ) : (
         <Login onLogin={() => {
           const getSession = async () => {
