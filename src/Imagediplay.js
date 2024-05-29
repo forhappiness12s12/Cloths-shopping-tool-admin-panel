@@ -140,6 +140,12 @@ const ImageDisplay = ({ onLogout }) => {
           Tshirt Fabric
         </button>
         <button
+          onClick={() => setFabricname("Short%20Fabric")}
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
+        >
+          Short Fabric
+        </button>
+        <button
           onClick={() => setFabricname("Polo%20Collar%20Fabric")}
           className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4 mr-4"
         >
