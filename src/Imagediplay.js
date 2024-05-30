@@ -197,13 +197,7 @@ const ImageDisplay = ({ onLogout }) => {
         </button>
       </div>
       <h1 className="text-3xl font-bold mb-6">Images Display</h1>
-      <div className="mb-6 flex space-x-4">
-        <input
-          type="file"
-          onChange={handleFileChangeAndUpload}
-          
-        />
-      </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {images.length > 0 ? (
           images.map((url, index) => (
@@ -218,6 +212,25 @@ const ImageDisplay = ({ onLogout }) => {
         ) : (
           <p>No images found.</p>
         )}
+        <div className="mb-6 flex space-x-4">
+        <input
+          type="file"
+          id="fileInput"
+          onChange={handleFileChangeAndUpload}
+          className="hidden"
+        />
+        <label
+          htmlFor="fileInput"
+          className="w-48 h-48 bg-cover bg-center flex items-center justify-center cursor-pointer"
+          style={{ 
+            backgroundImage: 'url("/Plus.png")',
+            backgroundRepeat: 'no-repeat', 
+            backgroundPosition: 'center center' 
+          }}
+        >
+          {/* Optional: Add text or an icon here */}
+        </label>
+      </div>
       </div>
       {selectedImage && (
         <div className="mt-6">
