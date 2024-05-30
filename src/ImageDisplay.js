@@ -161,7 +161,7 @@ const ImageDisplay = ({ onLogout }) => {
           <label
             htmlFor="fileInput"
             className="w-48 h-48 bg-cover bg-center flex items-center justify-center cursor-pointer"
-            style={{ backgroundImage: 'url("/Plus30.png")' }}
+            style={{ backgroundImage: 'url("https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/im/plus30.png")' }}
           >
           </label>
         </div>
