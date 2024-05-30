@@ -73,30 +73,42 @@ const ImageDisplay = ({ onLogout }) => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100">
-      <div className="flex flex-wrap justify-center mb-6">
-        {fabricTypes.map(type => (
-          <button
-            key={type}
-            onClick={() => setFabricname(type.replace(/ /g, "%20"))}
-            className={`px-3 py-2 text-sm sm:text-base rounded-md transition ${fabricname === type.replace(/ /g, "%20") ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
-          >
-            {type}
+      <div className="flex justify-center mb-6">
+        <div className="dropdown relative">
+          <button className="dropdown-btn bg-gray-800 text-white px-4 py-2 rounded-md">
+            Select Fabric Type
+            <span className="ml-2">&#x25BC;</span>
           </button>
-        ))}
+          <ul className="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 w-full z-10">
+            {fabricTypes.map((type) => (
+              <li key={type}>
+                <button
+                  onClick={() => setFabricname(type.replace(/ /g, "%20"))}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  {type}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.length > 0 ? images.map((url, index) => (
-          <div
-            key={index}
-            className={`border-2 rounded-lg overflow-hidden cursor-pointer ${selectedImage === url ? 'border-red-500' : 'border-transparent'}`}
-            onClick={() => handleImageSelect(url)}
-          >
-            <img src={url} alt={`Image ${index}`} className="w-full h-48 object-cover" />
-          </div>
-        )) : (
-          <p className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 text-center">No images found.</p>
+      <h1 className="text-3xl font-bold mb-6">Images Display</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {images.length > 0 ? (
+          images.map((url, index) => (
+            <div
+              key={index}
+              className={`border-2 rounded-lg overflow-hidden cursor-pointer ${selectedImage === url ? 'border-red-500' : 'border-transparent'}`}
+              onClick={() => handleImageSelect(url)}
+            >
+              <img src={url} alt={`Image ${index}`} className="w-full h-48 object-cover" />
+            </div>
+          ))
+        ) : (
+          <p>No images found.</p>
         )}
         <div className="mb-6 flex space-x-4">
           <input

@@ -14,3 +14,114 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.dropdown {
+  max-width: 20em;
+  margin: 20px auto 0;
+  margin-bottom: 10px;
+  position: relative;
+  
+  width: 50%;
+}
+
+.dropdown-btn {
+  background: #1d1f24;
+  font-size: 18px;
+  width: 100%;
+  border: none;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7em 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  
+}
+.arrow {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: transform ease-in-out 0.3s;
+}
+
+.dropdown-content {
+  list-style: none;
+  position: absolute;
+  top: 3.2em;
+  width: 100%;
+  visibility: hidden;
+  transform: translateY(-1em);
+  transition: transform ease 0.3s;
+  z-index: 200px;
+}
+
+.dropdown:hover .dropdown-content {
+  visibility: visible;
+  transform: translateY(1.3em);
+}
+
+.dropdown check .dropdown {
+  max-width: 13em;
+  margin: 80px auto 0;
+  position: relative;
+  width: 100%;
+}
+
+
+.arrow {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: transform ease-in-out 0.3s;
+}
+
+.dropdown-content {
+  list-style: none;
+  position: absolute;
+  top: 3.2em;
+  width: 100%;
+  visibility: hidden;
+  transform: translateY(-1em);
+  transition: transform ease 0.3s;
+}
+
+.dropdown:hover .dropdown-content {
+  visibility: visible;
+  transform: translateY(-0.2em);
+}
+
+.dropdown-content li {
+  background: #2f3238;
+  border-radius: 0.5em;
+}
+
+.dropdown-content li:hover {
+  background: #1d1f24;
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 0.7em 0.5em;
+  color: #fff;
+  margin: 0.1em 0;
+  text-decoration: none;
+}
+
+.dropdown-content li {
+  background: #2f3238;
+  border-radius: 0.5em;
+}
+
+.dropdown-content li:hover {
+  background: #1d1f24;
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 0.7em 0.5em;
+  color: #fff;
+  margin: 0.1em 0;
+  text-decoration: none;
+}
+
