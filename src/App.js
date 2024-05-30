@@ -47,7 +47,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100">
+    <div className="min-h-screen w-full h-full flex flex-col items-center bg-gray-100">
       
       {session ? (
         <div>
