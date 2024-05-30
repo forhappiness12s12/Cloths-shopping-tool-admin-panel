@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from './supabaseClient';
 
 const ImageDisplay = ({ onLogout }) => {
@@ -7,11 +7,15 @@ const ImageDisplay = ({ onLogout }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [fabricname, setFabricname] = useState('Trouser%20Fabric');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedFabric, setSelectedFabric] = useState('Select Fabric Type');
 
   const fabricTypes = [
     "Trouser Fabric", "Polo Fabric", "Jogger Fabric", "Tshirt Fabric", 
     "Short Fabric", "Polo Collar Fabric", "Polo Neckband Fabric", "Polo Cuff Fabric"
   ];
+
+  const dropdownRef = useRef();
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -71,26 +75,63 @@ const ImageDisplay = ({ onLogout }) => {
     setSelectedImage(null);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  const handleFabricSelect = (type) => {
+    setFabricname(type.replace(/ /g, "%20"));
+    setSelectedFabric(type);
+    setDropdownOpen(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100">
       <div className="flex justify-center mb-6">
-        <div className="dropdown relative">
-          <button className="dropdown-btn bg-gray-800 text-white px-4 py-2 rounded-md">
-            Select Fabric Type
-            <span className="ml-2">&#x25BC;</span>
+        <div className="relative inline-block text-left" ref={dropdownRef}>
+          <button
+            className="inline-flex justify-center w-64 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {selectedFabric}
+            <svg
+              className="-mr-1 ml-2 h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a1 1 0 01.707 1.707l-5.5 5.5a1 1 0 01-1.414 0l-5.5-5.5A1 1 0 011.707 3.293L10 3zm0 12a1 1 0 01-.707-1.707l5.5-5.5a1 1 0 011.414 0l5.5 5.5A1 1 0 0118.293 15.707L10 15z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
-          <ul className="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 w-full z-10">
-            {fabricTypes.map((type) => (
-              <li key={type}>
-                <button
-                  onClick={() => setFabricname(type.replace(/ /g, "%20"))}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-200"
-                >
-                  {type}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {dropdownOpen && (
+            <div className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                {fabricTypes.map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => handleFabricSelect(type)}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
