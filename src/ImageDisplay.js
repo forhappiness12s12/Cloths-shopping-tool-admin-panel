@@ -8,7 +8,7 @@ const ImageDisplay = ({ onLogout }) => {
   const [uploading, setUploading] = useState(false);
   const [fabricname, setFabricname] = useState('Trouser%20Fabric');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedFabric, setSelectedFabric] = useState('Select Fabric Type');
+  const [selectedFabric, setSelectedFabric] = useState('Trouser Fabric');
 
   const fabricTypes = [
     "Trouser Fabric", "Polo Fabric", "Jogger Fabric", "Tshirt Fabric", 
@@ -136,8 +136,8 @@ const ImageDisplay = ({ onLogout }) => {
       </div>
 
       
-<div className='border-solid rounded-md border-2 border-[#333333]'>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {images.length > 0 ? (
           images.map((url, index) => (
             <div
@@ -152,25 +152,29 @@ const ImageDisplay = ({ onLogout }) => {
           <p>No images found.</p>
         )}
         <div className="mb-6 flex space-x-4">
-          <input
-            type="file"
-            id="fileInput"
-            onChange={handleFileChangeAndUpload}
-            className="hidden"
-          />
-          <label
-            htmlFor="fileInput"
-            className="w-48 h-48 bg-cover bg-center flex items-center justify-center cursor-pointer"
-            style={{ backgroundImage: 'url("https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/im/plus30.png")' }}
-          >
-          </label>
-        </div>
+  <input
+    type="file"
+    id="fileInput"
+    onChange={handleFileChangeAndUpload}
+    className="hidden"
+  />
+  
+  <label
+    htmlFor="fileInput"
+    className="w-48 h-48 bg-cover bg-center flex items-center justify-center cursor-pointer border-2 border-[#494949] rounded-md p-4"
+    style={{ backgroundImage: 'url("https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/im/plus30.png")', backgroundSize: '60%', backgroundRepeat: 'no-repeat' }}
+  >
+  </label>
+</div>
+
+
+        
       </div>
-      </div>
+      
       {selectedImage && (
         <button
           onClick={handleDelete}
-          className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+          className="mt-8 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
         >
           Delete
         </button>
