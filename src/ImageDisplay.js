@@ -95,16 +95,16 @@ const ImageDisplay = ({ onLogout }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center bg-[#707070]">
       <div className="flex justify-center mb-6">
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <button
-            className="inline-flex justify-center w-64 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+            className="mt-3 inline-flex text-[24px] justify-between items-center w-64 rounded-md shadow-lg px-4 py-2 bg-gradient-to-r from-[#2b2a2a] to-[#616060] text-white font-medium hover:from-[#616060] hover:via-[#616060] hover:to-[#070606] transition-all duration-300"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {selectedFabric}
             <svg
-              className="-mr-1 ml-2 h-5 w-5"
+              className="ml-2 h-5 w-5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -118,7 +118,7 @@ const ImageDisplay = ({ onLogout }) => {
             </svg>
           </button>
           {dropdownOpen && (
-            <div className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 {fabricTypes.map((type) => (
                   <button
@@ -135,8 +135,8 @@ const ImageDisplay = ({ onLogout }) => {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Images Display</h1>
-
+      
+<div className='border-solid rounded-md border-2 border-[#333333]'>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {images.length > 0 ? (
           images.map((url, index) => (
@@ -161,10 +161,11 @@ const ImageDisplay = ({ onLogout }) => {
           <label
             htmlFor="fileInput"
             className="w-48 h-48 bg-cover bg-center flex items-center justify-center cursor-pointer"
-            style={{ backgroundImage: 'url("/Plus.png")' }}
+            style={{ backgroundImage: 'url("/Plus30.png")' }}
           >
           </label>
         </div>
+      </div>
       </div>
       {selectedImage && (
         <button
