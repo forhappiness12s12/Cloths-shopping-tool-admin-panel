@@ -48,21 +48,25 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100">
-      <Header
+      
+      {session ? (
+        <div>
+          <Header
         user={session?.user}
         onLogout={async () => {
           await supabase.auth.signOut();
           setSession(null);
         }}
       />
-      {session ? (
         <div className="flex lg:flex-row flex-col w-full h-full bg-[#292929]">
+          
           <div className="lg:w-[20%] lg:h-full w-full h-[20%] bg-[#141720] text-[white] ">
             <Prac onButtonClick={handleButtonClick} />
           </div>
           <div className="lg:w-[80%] lg:h-full w-full h-[80%] overflow-y-auto bg-[#181717] shadow-[#f0f0ef] shadow-lg">
             {renderContent()}
           </div>
+        </div>
         </div>
       ) : (
         <Login onLogin={() => {
