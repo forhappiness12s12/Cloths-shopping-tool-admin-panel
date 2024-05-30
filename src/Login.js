@@ -19,13 +19,13 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-10 bg-gray-100">
-      <div className="text-[40px] mb-10">ADMIN PANEL</div>
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <div className="grid gap-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="text-3xl mb-10">ADMIN PANEL</div>
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md max-w-md">
+        <div className="grid grid-cols-1 gap-6">
           <label className="block text-lg font-medium">Email</label>
           <input
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 rounded-md"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -34,7 +34,7 @@ const Login = ({ onLogin }) => {
 
           <label className="block text-lg font-medium">Password</label>
           <input
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 rounded-md"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -44,7 +44,7 @@ const Login = ({ onLogin }) => {
         {error && <p className="mt-4 text-red-500">{error}</p>}
         <button
           type="submit"
-          className="w-full mt-6 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+          className="w-full mt-6 p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
         >
           Login
         </button>

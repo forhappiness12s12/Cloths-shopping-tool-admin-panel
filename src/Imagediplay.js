@@ -82,6 +82,32 @@ const ImageDisplay = ({ onLogout }) => {
     setImages((prevImages) => [...prevImages, newImageUrl]);
   };
 
+  const handleFileChangeAndUpload = async (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+
+    setUploading(true);
+
+    const filePath = `${file.name}`;
+    const { data, error } = await supabase
+      .storage
+      .from(fabricname) // Use the correct bucket name from fabricname
+      .upload(filePath, file);
+
+    setUploading(false);
+
+    if (error) {
+      console.error('Error uploading file:', error);
+      return;
+    }
+
+    console.log('File uploaded:', data);
+
+    // Update the images list with the new image URL
+    const newImageUrl = `https://krvevkxigsdnikvakxjt.supabase.co/storage/v1/object/public/${fabricname}/${filePath}`;
+    setImages((prevImages) => [...prevImages, newImageUrl]);
+  };
+
   const handleImageSelect = (url) => {
     setSelectedImage(url);
   };
@@ -165,25 +191,18 @@ const ImageDisplay = ({ onLogout }) => {
         </button>
         <button
           onClick={onLogout}
-          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition mb-4"
+          className="mt-6 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-black transition mb-4"
         >
           Logout
         </button>
       </div>
-      <h1 className="text-3xl font-bold mb-6">Display PNG Images</h1>
+      <h1 className="text-3xl font-bold mb-6">Images Display</h1>
       <div className="mb-6 flex space-x-4">
         <input
           type="file"
-          onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          onChange={handleFileChangeAndUpload}
+          
         />
-        <button
-          onClick={handleUpload}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-          disabled={uploading}
-        >
-          {uploading ? 'Uploading...' : 'Upload'}
-        </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {images.length > 0 ? (
